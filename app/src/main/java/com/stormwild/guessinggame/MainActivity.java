@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button guessBtn;
     private TextView outputLabel;
     private int num;
+    private int guesses = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void init() {
         num = (int)(Math.random() * 100 + 1);
+        outputLabel.setText("Enter a whole number between 1 and 100.");
+        guessText.setText("");
+        guessText.requestFocus();
+        guessText.selectAll();
+        Toast.makeText(MainActivity.this, "New Game Started", Toast.LENGTH_LONG).show();
     }
 
     public void checkGuess() {
@@ -66,9 +73,12 @@ public class MainActivity extends AppCompatActivity {
             } else if (guess > num) {
                 message = guess + " is too high. Try again.";
             } else {
-                message = guess + " is correct. You win! Let's play again!";
+                message = guess + " is correct. You win after " + guesses + " tries! Let's play again!";
+
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
             }
 
+            guesses++;
         } catch (Exception e) {
             message = "Enter a whole number between 1 and 100.";
         } finally {
@@ -95,6 +105,19 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_new_game) {
+            init();
+            return true;
+        }
+
+        if (id == R.id.action_game_stats) {
+            return true;
+        }
+
+        if (id == R.id.action_about) {
             return true;
         }
 
