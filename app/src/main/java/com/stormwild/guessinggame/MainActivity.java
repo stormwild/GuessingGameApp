@@ -1,10 +1,13 @@
 package com.stormwild.guessinggame;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -48,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
     public void init() {
-        num = (int)(Math.random() * 100 + 1);
+        num = (int) (Math.random() * 100 + 1);
         outputLabel.setText("Enter a whole number between 1 and 100.");
         guessText.setText("");
         guessText.requestFocus();
@@ -88,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void showAbout() {
+        AlertDialog aboutDialog = new AlertDialog.Builder(MainActivity.this).create();
+        aboutDialog.setTitle("About Guessing Game");
+        aboutDialog.setMessage(Html.fromHtml("Copyright &copy; Guessing Game"));
+        aboutDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        aboutDialog.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_about) {
+            showAbout();
             return true;
         }
 
